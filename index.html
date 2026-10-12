@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uptime Quest</title>
+  <meta name="description" content="An 8-bit simulation of cloud reliability: High Availability, Fault Tolerance and Disaster Recovery.">
+  <link rel="icon" type="image/png" href="assets/icons/ha_cloud.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/zones.css">
+  <link rel="stylesheet" href="css/manual.css">
+</head>
+<body>
+
+  <!-- ============ TITLE SCREEN ============ -->
+  <section id="screen-title" class="screen active" aria-label="Title screen">
+    <div class="title-sound">
+      <button class="toggle-btn" data-toggle="bgm" type="button" aria-pressed="false">
+        <img src="assets/icons/ui_sound_off.png" alt=""><span>BGM OFF</span>
+      </button>
+      <button class="toggle-btn" data-toggle="sfx" type="button" aria-pressed="false">
+        <img src="assets/icons/ui_sound_off.png" alt=""><span>SFX OFF</span>
+      </button>
+    </div>
+    <div class="floaters" aria-hidden="true">
+      <img src="assets/icons/ha_cloud.png" class="floater f1" alt="">
+      <img src="assets/icons/ha_server_ok.png" class="floater f2" alt="">
+      
+      <!-- The clickable bulb link -->
+      <a href="https://www.youtube.com/watch?v=9NcPvmk4vfo&list=PL89Sygaj3zlF_aS6Eo7YwfnqGHsVpXxDy&index=13" target="_blank" rel="noopener noreferrer" class="bulb-link">
+        <img src="assets/icons/ha_bulb.png" class="floater f3" alt="Surprise Easter Egg">
+      </a>
+      
+      <img src="assets/icons/ha_shield.png" class="floater f4" alt="">
+      <img src="assets/icons/dr_restored.png" class="floater f5" alt="">
+      <img src="assets/icons/ha_cloud.png" class="floater f6" alt="">
+    </div>
+
+    <div class="title-wrap">
+      <p class="course">MIT 524 · Cloud and Emerging Computing Paradigm</p>
+      <h1 class="game-title">
+        <span class="line1">UPTIME</span>
+        <span class="line2">QUEST</span>
+      </h1>
+      <p class="subtitle">Cloud Reliability · Fault Tolerance · Disaster Recovery</p>
+
+      <button id="btn-start" class="press-enter" type="button">
+        <img src="assets/icons/ui_enter.png" alt="" class="icon-sm">
+        <span class="blink">PRESS ENTER</span>
+      </button>
+      <p class="hint">or tap the button</p>
+      <a class="manual-link" href="#manual" data-action="manual"><img src="assets/icons/ui_help.png" alt="" class="icon-sm"> HOW TO PLAY: READ THE MANUAL</a>
+      <p class="made-by">Made by <span>Claude L. Calimlim</span></p>
+    </div>
+  </section>
+
+  <!-- ============ ZONE HUB ============ -->
+  <section id="screen-hub" class="screen" aria-label="Zone select">
+    <header class="topbar">
+      <button class="icon-btn" data-action="home" type="button" title="Back to title (Esc)">
+        <img src="assets/icons/ui_home.png" alt="Home">
+      </button>
+      <span class="topbar-title">SELECT A ZONE</span>
+      <div class="topbar-right">
+        <button class="toggle-btn" data-toggle="bgm" type="button" aria-pressed="false">
+          <img src="assets/icons/ui_sound_off.png" alt=""><span>BGM OFF</span>
+        </button>
+        <button class="toggle-btn" data-toggle="sfx" type="button" aria-pressed="false">
+          <img src="assets/icons/ui_sound_off.png" alt=""><span>SFX OFF</span>
+        </button>
+        <button class="icon-btn" data-action="about" type="button" title="About and credits">
+          <img src="assets/icons/ui_help.png" alt="About">
+        </button>
+      </div>
+    </header>
+
+    <main class="hub">
+      <div class="dialog px-box">
+        <img src="assets/icons/ha_shop.png" alt="" class="dialog-avatar">
+        <div>
+          <p class="dialog-name">ANDY LIM</p>
+          <p class="dialog-text" id="andy-text"></p>
+        </div>
+      </div>
+
+      <div class="zones" role="list">
+        <button class="zone-card" data-zone="ha" role="listitem" type="button">
+          <span class="zone-tag tag-mint">PREVENT</span>
+          <img src="assets/icons/ha_load_balancer.png" alt="" class="zone-icon">
+          <span class="zone-name">HA ZONE</span>
+          <span class="zone-full">High Availability</span>
+          <span class="zone-desc">Break servers and zones. Watch traffic reroute before customers notice.</span>
+          <span class="zone-go">ENTER ▶</span>
+        </button>
+
+        <button class="zone-card" data-zone="ft" role="listitem" type="button">
+          <span class="zone-tag tag-yellow">SURVIVE</span>
+          <img src="assets/icons/ft_breaker.png" alt="" class="zone-icon">
+          <span class="zone-name">FT ZONE</span>
+          <span class="zone-full">Fault Tolerance</span>
+          <span class="zone-desc">Same failing node, two playbooks: proactive prevention vs reactive recovery.</span>
+          <span class="zone-go">ENTER ▶</span>
+        </button>
+
+        <button class="zone-card" data-zone="dr" role="listitem" type="button">
+          <span class="zone-tag tag-coral">RECOVER</span>
+          <img src="assets/icons/dr_alarm.png" alt="" class="zone-icon">
+          <span class="zone-name">DR ZONE</span>
+          <span class="zone-full">Disaster Recovery</span>
+          <span class="zone-desc">Pick an AWS strategy, trigger a disaster, and race the RTO clock.</span>
+          <span class="zone-go">ENTER ▶</span>
+        </button>
+      </div>
+
+      <p class="controls-hint">
+        <span class="key">◀</span><span class="key">▶</span> choose ·
+        <span class="key">ENTER</span> play ·
+        <span class="key">ESC</span> back
+      </p>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-made">Made by Claude L. Calimlim</span> · <a class="footer-link" href="#manual" data-action="manual">New here? Read the manual</a><br>
+      Illustrative simulation. Concepts from Endo et al. (2016), Kumari &amp; Kaur (2018),
+      Khoshkholghi et al. (2014) and the AWS DR whitepaper (2021). Numbers inside the games are for demonstration.
+    </footer>
+  </section>
+
+  <!-- ============ ZONE (placeholder until each game is built) ============ -->
+  <section id="screen-zone" class="screen" aria-label="Zone">
+    <header class="topbar">
+      <button class="icon-btn" data-action="hub" type="button" title="Back to zones (Esc)">
+        <img src="assets/icons/ui_back.png" alt="Back">
+      </button>
+      <span class="topbar-title" id="zone-title">ZONE</span>
+      <div class="topbar-right">
+        <button class="toggle-btn" data-toggle="bgm" type="button" aria-pressed="false">
+          <img src="assets/icons/ui_sound_off.png" alt=""><span>BGM OFF</span>
+        </button>
+        <button class="toggle-btn" data-toggle="sfx" type="button" aria-pressed="false">
+          <img src="assets/icons/ui_sound_off.png" alt=""><span>SFX OFF</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="zone-stage" id="zone-stage"></main>
+  </section>
+
+  <!-- ============ MANUAL ============ -->
+  <section id="screen-manual" class="screen" aria-label="Uptime Quest Manual">
+    <header class="topbar manual-bar">
+      <button class="icon-btn" data-action="close-manual" type="button" title="Back to the game (Esc)">
+        <img src="assets/icons/ui_back.png" alt="Back to the game">
+      </button>
+      <span class="topbar-title">UPTIME QUEST MANUAL</span>
+      <div class="topbar-right">
+        <button class="toggle-btn" data-toggle="bgm" type="button" aria-pressed="false">
+          <img src="assets/icons/ui_sound_off.png" alt=""><span>BGM OFF</span>
+        </button>
+        <button class="toggle-btn" data-toggle="sfx" type="button" aria-pressed="false">
+          <img src="assets/icons/ui_sound_off.png" alt=""><span>SFX OFF</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="cover">
+      <div class="cover-icons" aria-hidden="true">
+        <img src="assets/icons/ha_cloud.png" alt="" class="ci ci1">
+        <img src="assets/icons/ha_server_ok.png" alt="" class="ci ci2">
+        <img src="assets/icons/ha_bulb.png" alt="" class="ci ci3">
+        <img src="assets/icons/ha_shield.png" alt="" class="ci ci4">
+        <img src="assets/icons/dr_restored.png" alt="" class="ci ci5">
+        <img src="assets/icons/ft_breaker.png" alt="" class="ci ci6">
+      </div>
+      <div class="cover-inner">
+        <p class="cover-course">MIT 524 · Cloud and Emerging Computing Paradigm</p>
+        <div class="cover-logo">
+          <span class="l1">UPTIME</span>
+          <span class="l2">QUEST</span>
+        </div>
+        <span class="cover-chip">MANUAL</span>
+        <h1 class="cover-title">Uptime Quest Manual</h1>
+        <p class="cover-sub">A beginner's guide to our simulation</p>
+        <div class="cover-zones">
+          <span><img src="assets/icons/ha_load_balancer.png" alt="">HA ZONE</span>
+          <span><img src="assets/icons/ft_breaker.png" alt="">FT ZONE</span>
+          <span><img src="assets/icons/dr_alarm.png" alt="">DR ZONE</span>
+        </div>
+        <p class="cover-made">Made by <b>Claude L. Calimlim</b></p>
+        <div class="cover-actions">
+          <button class="px-btn" type="button" data-action="close-manual"><img src="assets/icons/ui_play.png" alt="" class="icon-sm"> BACK TO THE GAME</button>
+          <a class="px-btn ghost" href="assets/manual/Uptime_Quest_Manual.pdf" download><img src="assets/icons/ui_check.png" alt="" class="icon-sm"> DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <main class="manual-body">
+
+    <!-- ===================== CONTENTS ===================== -->
+    <section class="chapter" id="m-contents">
+      <h2 class="ch-title"><img src="assets/icons/ui_help.png" alt="">CONTENTS</h2>
+      <ol class="toc">
+        <li><a href="#manual" data-jump="m-welcome"><span>1</span>Welcome to Uptime Quest</a></li>
+        <li><a href="#manual" data-jump="m-start"><span>2</span>Getting started</a></li>
+        <li><a href="#manual" data-jump="m-controls"><span>3</span>Controls cheat sheet</a></li>
+        <li><a href="#manual" data-jump="m-ha"><span>4</span>HA Zone: High Availability</a></li>
+        <li><a href="#manual" data-jump="m-ft"><span>5</span>FT Zone: Fault Tolerance</a></li>
+        <li><a href="#manual" data-jump="m-dr"><span>6</span>DR Zone: Disaster Recovery</a></li>
+        <li><a href="#manual" data-jump="m-glossary"><span>7</span>Glossary</a></li>
+        <li><a href="#manual" data-jump="m-faq"><span>8</span>Troubleshooting and FAQ</a></li>
+        <li><a href="#manual" data-jump="m-credits"><span>9</span>Sources and credits</a></li>
+      </ol>
+
+      <div class="callbox mint">
+        <h3><img src="assets/icons/ui_star.png" alt="">QUICK START (60 SECONDS)</h3>
+        <ol>
+          <li>Open Uptime Quest and press <kbd>ENTER</kbd> on the title screen (or tap <b>PRESS ENTER</b>).</li>
+          <li>On the zone screen, pick <b>HA</b>, <b>FT</b> or <b>DR</b> with the arrow keys and press <kbd>ENTER</kbd>, or just click a zone.</li>
+          <li>Sound is <b>off</b> at first. Click <b>BGM</b> for music and <b>SFX</b> for sound effects (top-right corner) if you want them.</li>
+          <li>Each zone has a short instruction box at the top. Follow it, break things, and watch what happens.</li>
+          <li>Press <kbd>ESC</kbd> (or the back arrow) to return to the zone screen at any time.</li>
+        </ol>
+      </div>
+
+      <div class="callbox">
+        <h3><img src="assets/icons/ui_warning.png" alt="">HOW TO READ THIS MANUAL</h3>
+        <p>Each zone chapter has the same parts: <b>the goal</b>, <b>a screen tour</b> with numbered labels, <b>how it works</b>, and a <b>step-by-step walkthrough</b>. If you only have a few minutes, read the Quick Start above and the walkthrough of the zone you want to play.</p>
+        <p>Numbered yellow badges on the screenshots match the numbered lists right under them.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 1. WELCOME ===================== -->
+    <section class="chapter" id="m-welcome">
+      <h2 class="ch-title"><span class="ch-num">1</span>WELCOME TO UPTIME QUEST</h2>
+      <p class="lead">Uptime Quest is an 8-bit simulation that goes with the report <em>Cloud Reliability, Fault Tolerance and Disaster Recovery</em>. Instead of only reading about how cloud systems stay online, you get to break them on purpose and watch them recover.</p>
+
+      <h3>The three zones</h3>
+      <p>The report explains cloud reliability as three layers of defense. Each layer is one zone in the game:</p>
+      <div class="zone-grid">
+        <div class="zone-tile mint">
+          <img src="assets/icons/ha_load_balancer.png" alt="">
+          <b>HA ZONE</b><span class="tag">PREVENT</span>
+          <p>High Availability keeps everyday failures from causing downtime. You crash servers and watch a load balancer route around them.</p>
+        </div>
+        <div class="zone-tile yellow">
+          <img src="assets/icons/ft_breaker.png" alt="">
+          <b>FT ZONE</b><span class="tag">SURVIVE</span>
+          <p>Fault Tolerance lets a system survive failures that do happen. You compare acting before a failure (proactive) with acting after it (reactive).</p>
+        </div>
+        <div class="zone-tile coral">
+          <img src="assets/icons/dr_alarm.png" alt="">
+          <b>DR ZONE</b><span class="tag">RECOVER</span>
+          <p>Disaster Recovery brings a business back after a large-scale disaster. You pick a recovery strategy, trigger a disaster and race the clock.</p>
+        </div>
+      </div>
+
+      <h3>Meet Andy Lim</h3>
+      <div class="andy">
+        <img src="assets/icons/ha_shop.png" alt="">
+        <p>Andy Lim owns a mid-sized business that sells light bulbs and electrical fixtures, both retail and wholesale. He moved his store to the cloud, he has a small IT team and a limited budget, and his holiday sale is coming up. Every zone is about keeping <b>Andy's store</b> online. Andy is a fictional case study made for this report.</p>
+      </div>
+
+      <div class="callbox coral">
+        <h3><img src="assets/icons/ui_warning.png" alt="">WHAT'S REAL AND WHAT'S ILLUSTRATIVE</h3>
+        <p>The <b>concepts</b> are real and come from the report's sources: redundancy models, health checks and failover, proactive and reactive techniques, the fault → error → failure chain, RTO and RPO, and the four AWS recovery strategies.</p>
+        <p>The <b>numbers inside the games</b> (seconds, request counts, order counts, costs) are made up for the demo and sped up so a whole outage fits in a few seconds. They follow the right order (for example, Backup &amp; Restore is always slower and cheaper than Active/Active), but they are not measurements.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 2. GETTING STARTED ===================== -->
+    <section class="chapter" id="m-start">
+      <h2 class="ch-title"><span class="ch-num">2</span>GETTING STARTED</h2>
+
+      <h3>Opening the app</h3>
+      <ul class="steps">
+        <li><b>Online:</b> open the Uptime Quest link shared by the presenter in any modern browser (Chrome, Edge, Firefox or Safari).</li>
+        <li><b>Offline:</b> if you have the project folder, double-click <code>index.html</code>. It runs without internet.</li>
+        <li><b>Phones and tablets</b> work too. Tap instead of using the keyboard.</li>
+      </ul>
+
+      <h3>The title screen</h3>
+      <figure class="shot" data-shot="m_title"><img width="1920" height="1200" loading="lazy" src="assets/manual/m_title.png" alt="Uptime Quest title screen"></figure>
+      <ol class="legend">
+        <li>The game title.</li>
+        <li><b>PRESS ENTER</b>: press <kbd>ENTER</kbd> or <kbd>SPACE</kbd>, or click / tap this button, to continue.</li>
+        <li><b>HOW TO PLAY</b>: opens this manual. It's also linked from the About box and the zone screen's footer. Inside the manual, the back arrow (or <kbd>ESC</kbd>, or your browser's Back button) returns you to the game.</li>
+        <li>The app's creator.</li>
+        <li><b>BGM</b> and <b>SFX</b>: turn music and sound effects on or off before you start.</li>
+      </ol>
+
+      <h3>The zone screen (hub)</h3>
+      <figure class="shot" data-shot="m_hub"><img width="1920" height="1200" loading="lazy" src="assets/manual/m_hub.png" alt="Zone select screen"></figure>
+      <ol class="legend">
+        <li><b>Home</b>: back to the title screen (or press <kbd>ESC</kbd>).</li>
+        <li><b>BGM</b>: background music on/off. It is <b>off</b> when you first open the app.</li>
+        <li><b>SFX</b>: sound effects (beeps, alarms, clicks) on/off. Also <b>off</b> at first.</li>
+        <li><b>About</b>: what the app is, its sources, credits, and a link to this manual.</li>
+        <li><b>Andy Lim's message</b>: he types out a short intro when you arrive.</li>
+        <li><b>Zone cards</b>: the yellow outline and arrow show which zone is selected. Move with <kbd>◀</kbd> <kbd>▶</kbd> (or <kbd>▲</kbd> <kbd>▼</kbd>), hover with the mouse, then press <kbd>ENTER</kbd> or click to play.</li>
+        <li>A reminder of the keyboard controls (hidden on touch screens).</li>
+      </ol>
+
+      <h3>Sound</h3>
+      <p>Uptime Quest starts silent: both <b>BGM</b> and <b>SFX</b> are <b>OFF</b> every time you open the app. Click <b>BGM</b> for the looping 8-bit music and <b>SFX</b> for game sounds.</p>
+      <ul class="steps">
+        <li>The <b>BGM</b> and <b>SFX</b> buttons are on the title screen, the zone screen, every zone, and the top bar of the online manual.</li>
+        <li>Once you turn the music on, it keeps playing everywhere in the app, including while you read the online manual.</li>
+        <li>Reloading the page turns both back off.</li>
+      </ul>
+
+      <h3>Jumping straight to a screen</h3>
+      <p>Add one of these to the end of the app's address to skip the menus: <code>#hub</code> (zone screen), <code>#ha</code>, <code>#ft</code>, <code>#dr</code> or <code>#manual</code> (this manual). This works on a fresh load and on a tab that's already open.</p>
+
+      <div class="two-col">
+        <figure class="shot phone" data-shot="m_phone"><img width="780" height="1520" loading="lazy" src="assets/manual/m_phone.png" alt="Zone screen on a phone"></figure>
+        <div>
+          <h3>On a phone</h3>
+          <p>The layout stacks into one column. Everything is tap-to-use: tap a zone card to open it, tap the back arrow to leave. Keyboard hints are hidden on touch screens.</p>
+          <p>In the FT zone the two panels sit on top of each other instead of side by side, so scroll down to see the reactive panel.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. CONTROLS ===================== -->
+    <section class="chapter" id="m-controls">
+      <h2 class="ch-title"><span class="ch-num">3</span>CONTROLS CHEAT SHEET</h2>
+      <p>Everything can be done with a mouse or by tapping. These keyboard shortcuts are optional.</p>
+      <table class="tbl">
+        <thead><tr><th>WHERE</th><th>KEY</th><th>WHAT IT DOES</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="1">Title screen</td><td><kbd>ENTER</kbd> / <kbd>SPACE</kbd></td><td>Start (go to the zone screen)</td></tr>
+          <tr><td rowspan="3">Zone screen</td><td><kbd>◀</kbd> <kbd>▶</kbd> <kbd>▲</kbd> <kbd>▼</kbd></td><td>Move between zones</td></tr>
+          <tr><td><kbd>ENTER</kbd></td><td>Open the selected zone</td></tr>
+          <tr><td><kbd>ESC</kbd></td><td>Back to the title screen</td></tr>
+          <tr><td>Any zone</td><td><kbd>ESC</kbd></td><td>Back to the zone screen</td></tr>
+          <tr><td rowspan="3">HA zone</td><td><kbd>1</kbd> – <kbd>4</kbd></td><td>Pick a redundancy model (None, 2N, N+M, N-way active)</td></tr>
+          <tr><td><kbd>C</kbd></td><td>Chaos mode on/off</td></tr>
+          <tr><td><kbd>R</kbd></td><td>Repair all servers</td></tr>
+          <tr><td>FT zone</td><td><kbd>ENTER</kbd> / <kbd>SPACE</kbd></td><td>Start the scenario</td></tr>
+          <tr><td rowspan="2">DR zone</td><td><kbd>1</kbd> – <kbd>4</kbd></td><td>Pick a strategy (Backup &amp; Restore, Pilot Light, Warm Standby, Active/Active)</td></tr>
+          <tr><td><kbd>ENTER</kbd> / <kbd>SPACE</kbd></td><td>Trigger the disaster</td></tr>
+          <tr><td>About box</td><td><kbd>ESC</kbd></td><td>Close it (or click outside it)</td></tr>
+          <tr><td>Manual</td><td><kbd>ESC</kbd></td><td>Back to the game (arrow keys and space scroll the page as usual)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Mouse and touch</h3>
+      <table class="tbl">
+        <thead><tr><th>ACTION</th><th>RESULT</th></tr></thead>
+        <tbody>
+          <tr><td>Click / tap a <b>server</b> (HA)</td><td>Crashes it. Click a crashed server again to repair it.</td></tr>
+          <tr><td>Click <b>OUTAGE</b> on a zone column (HA)</td><td>Crashes every server in that availability zone at once.</td></tr>
+          <tr><td>Click a <b>technique</b> button (FT)</td><td>Uses that technique. Buttons only work when they're lit up.</td></tr>
+          <tr><td>Click a <b>strategy</b> card (DR)</td><td>Picks it and shows what runs in the recovery region.</td></tr>
+          <tr><td>Click <b>BGM</b> / <b>SFX</b></td><td>Turns music / sound effects on or off.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===================== 4. HA ZONE ===================== -->
+    <section class="chapter" id="m-ha">
+      <h2 class="ch-title"><span class="ch-num">4</span><img src="assets/icons/ha_load_balancer.png" alt="">HA ZONE: HIGH AVAILABILITY</h2>
+      <div class="goal"><b>GOAL</b> Keep Andy's store answering customers while servers fail, and see how each redundancy model handles it.</div>
+
+      <h3>Screen tour</h3>
+      <figure class="shot" data-shot="m_ha_overview"><img width="1740" height="743" loading="lazy" src="assets/manual/m_ha_overview.png" alt="HA zone overview"></figure>
+      <ol class="legend">
+        <li><b>Redundancy models</b>: four buttons (keys <kbd>1</kbd>–<kbd>4</kbd>). Each has a real-world example under its name.</li>
+        <li><b>Model description</b>: one line explaining the selected model.</li>
+        <li><b>Customers</b>: they send about 6 requests every second (the small yellow squares).</li>
+        <li><b>Load balancer</b>: sends each request to a healthy server, taking turns. The small monitor above it flashes on every <b>health check</b> (once per second).</li>
+        <li><b>Availability zones 1–3</b>: separate data centers. Columns marked "unused" have no server in the current model.</li>
+        <li><b>OUTAGE</b>: knocks out every server in that zone at once, like a power failure in one data center.</li>
+        <li><b>Server tile</b>: click it to crash it, click again to repair it. It shows its name, its status (see table below) and a <b>load bar</b>.</li>
+        <li><b>REPAIR ALL</b> (<kbd>R</kbd>): fixes every crashed server.</li>
+        <li><b>CHAOS MODE</b> (<kbd>C</kbd>): crashes a random server every 3–5.5 seconds and repairs it 6 seconds later.</li>
+        <li><b>RESET</b>: restarts the current model with fresh counters.</li>
+      </ol>
+
+      <h3>How it works</h3>
+      <p>When a server crashes, the load balancer <b>doesn't know right away</b>. It keeps sending requests to the dead server until the next health check, up to 1 second later, and those requests are dropped (they flash red). After the health check, the load balancer stops using that server. What happens next depends on the model:</p>
+      <table class="tbl">
+        <thead><tr><th>MODEL</th><th>SERVERS</th><th>WHEN ONE FAILS</th><th>REAL-WORLD EXAMPLE</th></tr></thead>
+        <tbody>
+          <tr><td><b>No redundancy</b></td><td>1 server</td><td>Nothing takes over. The store is <b>down</b> until you repair it. This is a single point of failure.</td><td>-</td></tr>
+          <tr><td><b>2N</b></td><td>1 active + 1 full standby in another zone</td><td>After the health check, the standby is <b>promoted</b> to primary. That takes 1.5 more seconds, and requests are dropped in the meantime.</td><td>Amazon RDS Multi-AZ</td></tr>
+          <tr><td><b>N+M</b></td><td>N = 2 active + M = 1 spare in a warm pool</td><td>The surviving server is <b>overloaded</b> (it has to do the work of two) and about half the requests fail until the spare joins 1.5 seconds later.</td><td>EC2 Auto Scaling warm pools</td></tr>
+          <tr><td><b>N-way active</b></td><td>3 active, all serving</td><td>The other two <b>absorb</b> the work right away. They were only running at about 67% load, so nothing gets dropped after the health check. Lose two at once and the last one overloads.</td><td>Netflix multi-region active-active</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Server status labels</h3>
+      <table class="tbl compact">
+        <thead><tr><th>LABEL</th><th>MEANING</th></tr></thead>
+        <tbody>
+          <tr><td class="t-mint">SERVING</td><td>Healthy and receiving traffic.</td></tr>
+          <tr><td class="t-coral">CRASHED · LB UNAWARE</td><td>Dead, but the load balancer hasn't noticed yet. Requests sent here are lost.</td></tr>
+          <tr><td class="t-coral">DOWN</td><td>Dead, and the load balancer has stopped sending it traffic.</td></tr>
+          <tr><td class="t-grey">STANDBY / WARM POOL</td><td>A healthy backup that isn't serving yet.</td></tr>
+          <tr><td class="t-grey">JOINING...</td><td>A standby or spare taking over (1.5 seconds).</td></tr>
+          <tr><td class="t-grey">WAITING FOR CHECK</td><td>Repaired, waiting for the next health check before it gets traffic again.</td></tr>
+          <tr><td class="t-yellow">OVERLOADED</td><td>Getting more work than it can handle, so some requests fail. Its load bar turns red.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Reading the results</h3>
+      <figure class="shot" data-shot="m_ha_failure"><img width="1740" height="1029" loading="lazy" src="assets/manual/m_ha_failure.png" alt="HA zone during a failure"></figure>
+      <ol class="legend">
+        <li>A crashed server (DOWN).</li>
+        <li>The surviving server, OVERLOADED and dropping some requests.</li>
+        <li>The warm-pool spare, JOINING to restore capacity.</li>
+        <li><b>Store status</b>, based on the last 3 seconds: <b>ONLINE</b> if more than 90% of requests succeeded, <b>DEGRADED</b> if 25–90%, <b>DOWN</b> if under 25%.</li>
+        <li><b>Availability</b>: requests served ÷ all requests since the model was selected. Below it, the number of "nines" (99% is two nines, 99.9% is three).</li>
+        <li><b>Event log</b>: the newest event is on top. It explains every crash, health check and failover.</li>
+      </ol>
+      <p>When you switch models or leave the zone, your run is saved to the <b>YOUR RUNS PER MODEL</b> table at the bottom, as long as it had at least 20 requests. The table keeps your longest run for each model. Use it to compare models. It clears when the page is reloaded.</p>
+
+      <h3>Walkthrough</h3>
+      <div class="mission">
+        <h4><span>MISSION 1</span>A single point of failure</h4>
+        <ol>
+          <li>Press <kbd>1</kbd> (or click <b>NO REDUNDANCY</b>).</li>
+          <li>Click server <b>S1</b> to crash it.</li>
+          <li>Watch every request turn red and the store switch to <b>DOWN</b>. Nothing can take over.</li>
+          <li>Click S1 again to repair it. It waits for the next health check, then serving resumes.</li>
+        </ol>
+      </div>
+      <div class="mission">
+        <h4><span>MISSION 2</span>2N failover</h4>
+        <ol>
+          <li>Press <kbd>2</kbd>. S1 is active in Zone 1 and S2 is the standby in Zone 2.</li>
+          <li>Crash S1. Its label reads <b>CRASHED · LB UNAWARE</b> until the health check catches it.</li>
+          <li>Read the event log: "Promoting standby S2 to primary...", then "S2 is the new primary".</li>
+          <li>Repair S1. It comes back as the new <b>standby</b>, not the primary.</li>
+        </ol>
+      </div>
+      <div class="mission">
+        <h4><span>MISSION 3</span>N+M overload</h4>
+        <ol>
+          <li>Press <kbd>3</kbd>. S1 and S2 are active and S3 waits in the warm pool.</li>
+          <li>Crash S1. S2's load bar turns red (<b>OVERLOADED</b>) because it's doing the work of two.</li>
+          <li>After 1.5 seconds S3 joins and both bars go back to normal.</li>
+        </ol>
+      </div>
+      <div class="mission">
+        <h4><span>MISSION 4</span>N-way active under chaos</h4>
+        <ol>
+          <li>Press <kbd>4</kbd>, then press <kbd>C</kbd> to turn on chaos mode.</li>
+          <li>Let it run for 20–30 seconds. Servers crash and recover on their own.</li>
+          <li>Switch back to <kbd>2</kbd> with chaos still on and compare the availability numbers in the runs table.</li>
+        </ol>
+      </div>
+      <div class="tip"><img src="assets/icons/ui_star.png" alt=""><p><b>Try this:</b> in N-way active, use <b>OUTAGE</b> on Zone 2. One zone going down is survivable when traffic is spread across zones. That's why cloud providers recommend deploying to several availability zones.</p></div>
+    </section>
+
+    <!-- ===================== 5. FT ZONE ===================== -->
+    <section class="chapter" id="m-ft">
+      <h2 class="ch-title"><span class="ch-num">5</span><img src="assets/icons/ft_breaker.png" alt="">FT ZONE: FAULT TOLERANCE</h2>
+      <div class="goal"><b>GOAL</b> Finish Andy's holiday orders job even though Node A is about to fail, once by preventing the failure and once by recovering from it.</div>
+
+      <h3>The idea</h3>
+      <p>Both panels show the <b>same situation at the same time</b>: Node A is running a job and slowly overheating. The <b>left panel (Proactive FT)</b> only lets you act <b>before</b> Node A fails. The <b>right panel (Reactive FT)</b> only lets you act <b>after</b> it fails. Comparing the two is the point of this zone.</p>
+
+      <h3>Screen tour</h3>
+      <figure class="shot" data-shot="m_ft_overview"><img width="1740" height="1208" loading="lazy" src="assets/manual/m_ft_overview.png" alt="FT zone with warning signs showing"></figure>
+      <ol class="legend">
+        <li><b>START SCENARIO / RESTART</b> (<kbd>ENTER</kbd>): starts both panels together.</li>
+        <li><b>Fault → error → failure chain</b>: each step lights up as the problem gets worse. <b>Fault</b> = the underlying problem, <b>error</b> = the system's internal state goes wrong, <b>failure</b> = the user sees it.</li>
+        <li><b>Node A temperature</b>: rises from 0% to 100% in about 8 seconds. At 30% the fault shows (warning signs), at 65% the error shows, at 100% Node A crashes.</li>
+        <li><b>Node B</b>: a healthy spare that some techniques use.</li>
+        <li><b>Job bar</b>: the holiday orders job takes about 16 seconds. The yellow lines are <b>checkpoints</b>: the job saves its progress at 20%, 40%, 60% and 80%.</li>
+        <li><b>Proactive techniques</b>: unlock (they flash) once the temperature reaches 30% and stay available until Node A crashes. That gives you about 5–6 seconds.</li>
+        <li><b>Reactive techniques</b>: locked until Node A crashes. Nothing has broken yet, so there's nothing to recover from.</li>
+        <li>A real-world example for each side: Netflix's Chaos Monkey (proactive) and Hystrix (reactive).</li>
+      </ol>
+
+      <h3>Proactive techniques (left panel)</h3>
+      <table class="tbl">
+        <thead><tr><th>TECHNIQUE</th><th>WHAT HAPPENS IN THE GAME</th><th>WORK LOST</th><th>EXTRA TIME</th></tr></thead>
+        <tbody>
+          <tr><td><img class="ti" src="assets/icons/ft_self_heal.png" alt="">Self-healing</td><td>The system spots the problem and fixes Node A by itself. The temperature drops and the job continues.</td><td>0%</td><td>0.8 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_rejuvenate.png" alt="">Software rejuvenation</td><td>A planned restart puts Node A back in a clean state, then the job picks up where it was.</td><td>0%</td><td>1.5 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_preempt.png" alt="">Pre-emptive migration</td><td>The job moves to Node B before Node A fails. Node A still crashes, but nothing was running on it, so there's no failure for the user.</td><td>0%</td><td>0.5 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_balance.png" alt="">Load balancing</td><td>Node B takes half the work, Node A cools to about 45% and never crashes.</td><td>0%</td><td>0 s</td></tr>
+        </tbody>
+      </table>
+      <p>If you don't pick a proactive technique in time, Node A crashes and the left panel shows <b>"Too late!"</b>. Proactive techniques can't help once the failure has happened. Press <b>RESTART</b> to try again.</p>
+
+      <h3>Reactive techniques (right panel)</h3>
+      <p>Node A crashes when the job is at about 49%. Then the reactive buttons unlock:</p>
+      <table class="tbl">
+        <thead><tr><th>TECHNIQUE</th><th>WHAT HAPPENS IN THE GAME</th><th>WORK LOST</th><th>EXTRA TIME</th></tr></thead>
+        <tbody>
+          <tr><td><img class="ti" src="assets/icons/ft_checkpoint.png" alt="">Checkpointing</td><td>Node A restarts and the job resumes from the last checkpoint (40%), not from zero.</td><td>about 10%</td><td>1.4 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_replicate.png" alt="">Replication</td><td>A copy of the job was already running on Node B, so it takes over at once. It costs double the resources.</td><td>0%</td><td>0.3 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_migrate.png" alt="">Job migration</td><td>The failed job moves to healthy Node B and starts over there.</td><td>all (about 49%)</td><td>0.6 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_retry.png" alt="">Retry</td><td>Node A restarts and runs the job again. The first attempt fails because the node is still unstable, and the second succeeds. The job starts over.</td><td>all (about 49%)</td><td>3.2 s</td></tr>
+          <tr><td><img class="ti" src="assets/icons/ft_resubmit.png" alt="">Task resubmission</td><td>The job goes back to the queue, waits for a free slot, then starts over on Node B.</td><td>all (about 49%)</td><td>1.6 s</td></tr>
+        </tbody>
+      </table>
+      <p class="small">"Extra time" counts the recovery pause only, not the time you take to choose.</p>
+
+      <figure class="shot" data-shot="m_ft_crash"><img width="1740" height="1073" loading="lazy" src="assets/manual/m_ft_crash.png" alt="FT zone after Node A crashes"></figure>
+      <ol class="legend">
+        <li>The proactive panel when nothing was picked in time: <b>FAILURE NOT PREVENTED</b>.</li>
+        <li>The chain reaches <b>FAILURE</b> (red) once the user is affected.</li>
+        <li>The reactive panel tells you where the job stopped.</li>
+        <li>Reactive techniques are now unlocked and flashing. Pick one.</li>
+      </ol>
+
+      <h3>After a run</h3>
+      <figure class="shot" data-shot="m_ft_summary"><img width="1740" height="759" loading="lazy" src="assets/manual/m_ft_summary.png" alt="FT zone summary"></figure>
+      <ol class="legend">
+        <li><b>Same failure, two playbooks</b>: the work lost on each side, side by side.</li>
+        <li>The takeaway: proactive tries to stop the failure, reactive limits the damage, and real systems use both.</li>
+        <li><b>Techniques tried</b>: lights up each of the 9 techniques you've used. Try all 9 for a trophy. It resets when the page is reloaded.</li>
+      </ol>
+
+      <h3>Walkthrough</h3>
+      <div class="mission">
+        <h4><span>RUN 1</span>Prevent and recover</h4>
+        <ol>
+          <li>Click <b>START SCENARIO</b>.</li>
+          <li>Watch the temperature bar. At 30%, <b>FAULT</b> lights up and the proactive buttons start flashing.</li>
+          <li>On the left, click <b>Pre-emptive migration</b>. The job jumps to Node B.</li>
+          <li>On the right, wait for Node A to crash (about 8 seconds in), then click <b>Checkpointing</b>.</li>
+          <li>Wait for both jobs to finish and read the summary: 0% lost on the left, about 10% lost on the right.</li>
+        </ol>
+      </div>
+      <div class="mission">
+        <h4><span>RUN 2</span>Miss the window</h4>
+        <ol>
+          <li>Click <b>TRY OTHER TECHNIQUES</b> (or RESTART) and don't touch the left panel.</li>
+          <li>When Node A crashes, the left panel shows <b>Too late!</b> This is why proactive techniques need monitoring and early warning.</li>
+          <li>On the right, try <b>Job migration</b> and notice the job restarts from 0%.</li>
+        </ol>
+      </div>
+      <div class="tip"><img src="assets/icons/ui_star.png" alt=""><p><b>Try this:</b> compare <b>Checkpointing</b> with <b>Retry</b>. Both use Node A again, but only checkpointing keeps your progress.</p></div>
+    </section>
+
+    <!-- ===================== 6. DR ZONE ===================== -->
+    <section class="chapter" id="m-dr">
+      <h2 class="ch-title"><span class="ch-num">6</span><img src="assets/icons/dr_alarm.png" alt="">DR ZONE: DISASTER RECOVERY</h2>
+      <div class="goal"><b>GOAL</b> Pick a recovery strategy for Andy's store, survive a disaster in Region A, and compare downtime, data loss and cost.</div>
+
+      <h3>Two numbers to watch</h3>
+      <div class="two-col">
+        <div class="callbox"><h3><img src="assets/icons/dr_rto.png" alt="">RTO · RECOVERY TIME OBJECTIVE</h3><p>How long the store is down: the time from the disaster to full service again. Smaller is better.</p></div>
+        <div class="callbox"><h3><img src="assets/icons/dr_rpo.png" alt="">RPO · RECOVERY POINT OBJECTIVE</h3><p>How much data is lost, measured in time: anything saved after the last copy reached the backup site is gone. Smaller is better.</p></div>
+      </div>
+
+      <h3>Screen tour</h3>
+      <figure class="shot" data-shot="m_dr_ready"><img width="1740" height="1073" loading="lazy" src="assets/manual/m_dr_ready.png" alt="DR zone with Warm Standby selected"></figure>
+      <ol class="legend">
+        <li><b>Progress strip</b>: 1 pick a strategy, 2 trigger a disaster, 3 watch the recovery. The current step is yellow.</li>
+        <li><b>Strategy cards</b> (keys <kbd>1</kbd>–<kbd>4</kbd>). A green check appears on cards you've already tested.</li>
+        <li><b>Monthly cost</b> in coins, from 1 (cheapest) to 4 (most expensive).</li>
+        <li><b>Tier</b>: the closest backup tier from the report's Implementation Tiers table (Cold, Warm, Modified Hot, Hot).</li>
+        <li><b>Region A</b>: Andy's main site, with web servers, app servers and the database.</li>
+        <li><b>Region B</b>: the recovery site. What runs here depends on the strategy you pick.</li>
+        <li><b>Store status</b> and the <b>orders today</b> counter, which goes up while the store is online.</li>
+        <li><b>TRIGGER DISASTER</b> (<kbd>ENTER</kbd>): unlocks after you pick a strategy.</li>
+      </ol>
+
+      <h3>The four strategies</h3>
+      <table class="tbl">
+        <thead><tr><th>STRATEGY</th><th>WHAT'S IN REGION B BEFOREHAND</th><th>RTO</th><th>RPO</th><th>COST</th></tr></thead>
+        <tbody>
+          <tr><td><img class="ti" src="assets/icons/dr_backup.png" alt="">Backup &amp; Restore</td><td>Only backups. Servers have to be built from scratch.</td><td>8 h</td><td>4 h</td><td>1/4</td></tr>
+          <tr><td><img class="ti" src="assets/icons/dr_pilot.png" alt="">Pilot Light</td><td>Data replicating, app servers switched off.</td><td>40 min</td><td>10 min</td><td>2/4</td></tr>
+          <tr><td><img class="ti" src="assets/icons/dr_warm.png" alt="">Warm Standby</td><td>Data replicating plus a small working copy of the store.</td><td>10 min</td><td>1 min</td><td>3/4</td></tr>
+          <tr><td><img class="ti" src="assets/icons/dr_multisite.png" alt="">Multi-Site Active/Active</td><td>A full second site already serving customers.</td><td>30 s</td><td>about 3 s</td><td>4/4</td></tr>
+        </tbody>
+      </table>
+      <p class="small">Illustrative numbers. The order (slowest and cheapest to fastest and most expensive) follows the AWS Disaster Recovery whitepaper (2021).</p>
+
+      <h3>During the disaster</h3>
+      <figure class="shot" data-shot="m_dr_running"><img width="1740" height="1089" loading="lazy" src="assets/manual/m_dr_running.png" alt="DR zone during recovery"></figure>
+      <ol class="legend">
+        <li>Region A goes <b>DOWN</b>. The disaster changes every time: a typhoon, cut power lines or a security breach.</li>
+        <li><b>Recovery steps</b>: the first step ("Disaster detected") shows red. Each later step lights up yellow while it runs and turns into a green check when done. Strategies that keep more running in Region B have fewer steps.</li>
+        <li><b>RTO clock</b>: counts the downtime in game time (sped up). It turns green when the store is back.</li>
+        <li><b>RPO bar</b>: how much recent data was lost. Long red bar = lots of lost orders.</li>
+      </ol>
+
+      <h3>The result</h3>
+      <figure class="shot" data-shot="m_dr_result"><img width="1740" height="1118" loading="lazy" src="assets/manual/m_dr_result.png" alt="DR result and comparison"></figure>
+      <ol class="legend">
+        <li><b>Result</b>: downtime (RTO), data lost (RPO), orders affected and monthly cost. "Orders lost + missed" assumes 30 orders per hour during the holiday sale: orders lost from the RPO window plus orders missed while the store was down.</li>
+        <li><b>Andy's reaction</b> to how it went.</li>
+        <li><b>TRY ANOTHER STRATEGY</b> picks the next untested one. <b>BACK TO ZONES</b> returns to the hub.</li>
+        <li><b>Compare your runs</b>: appears after 2 tested strategies. It clears when the page is reloaded.</li>
+        <li>After all 4, Andy's <b>guide question</b> appears. This is the class discussion question.</li>
+      </ol>
+
+      <h3>Walkthrough</h3>
+      <div class="mission">
+        <h4><span>RUN 1</span>The cheapest plan</h4>
+        <ol>
+          <li>Press <kbd>1</kbd> for <b>Backup &amp; Restore</b>. Region B shows only backups.</li>
+          <li>Press <kbd>ENTER</kbd> (or click <b>TRIGGER DISASTER</b>).</li>
+          <li>Watch all five recovery steps. The clock runs to 8 hours and the RPO bar fills up: 4 hours of orders are gone.</li>
+        </ol>
+      </div>
+      <div class="mission">
+        <h4><span>RUN 2</span>The most expensive plan</h4>
+        <ol>
+          <li>Press <kbd>4</kbd> (or click the <b>Multi-Site Active/Active</b> card). Region B is already online.</li>
+          <li>Trigger the disaster. The store never goes dark and there are only three quick steps.</li>
+          <li>Look at the cost: 4 coins.</li>
+        </ol>
+      </div>
+      <div class="mission">
+        <h4><span>RUN 3</span>Answer Andy's question</h4>
+        <ol>
+          <li>Test <b>Pilot Light</b> (<kbd>2</kbd>) and <b>Warm Standby</b> (<kbd>3</kbd>) too.</li>
+          <li>Use the comparison table and Andy's situation (mid-sized, budget-conscious, small IT team, seasonal spikes) to decide which strategy you would recommend.</li>
+          <li>There is no single "correct" answer. Be ready to explain the trade-off you chose.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== 7. GLOSSARY ===================== -->
+    <section class="chapter" id="m-glossary">
+      <h2 class="ch-title"><span class="ch-num">7</span>GLOSSARY</h2>
+      <dl class="glossary">
+        <dt>Availability</dt><dd>The share of time (or of requests) a service works. 99.999% is called "five nines" and allows less than 5.25 minutes of downtime a year (Endo et al., 2016).</dd>
+        <dt>Availability zone</dt><dd>A separate data center (with its own power, cooling and network) inside one cloud region.</dd>
+        <dt>Region</dt><dd>A geographic area with one or more data centers. Disaster recovery usually uses a second region.</dd>
+        <dt>Load balancer</dt><dd>The traffic director that spreads requests across servers and avoids unhealthy ones.</dd>
+        <dt>Health check</dt><dd>A regular "are you alive?" ping from the load balancer to each server.</dd>
+        <dt>Failover</dt><dd>Switching work from a failed component to a backup.</dd>
+        <dt>Redundancy</dt><dd>Keeping extra components so one failure doesn't stop the service.</dd>
+        <dt>2N / N+M / N-way active</dt><dd>Redundancy models: one full standby per active unit / M spares shared by N active units / every unit active and sharing the load.</dd>
+        <dt>Standby / warm pool</dt><dd>A backup server that is ready but not serving traffic yet. A warm pool is a group of pre-started spares.</dd>
+        <dt>Fault → error → failure</dt><dd>A fault (an underlying problem) causes an error (a wrong internal state), which can become a failure (something the user notices).</dd>
+        <dt>Proactive FT</dt><dd>Fault tolerance that predicts and prevents failures before they happen.</dd>
+        <dt>Reactive FT</dt><dd>Fault tolerance that responds after a failure has happened.</dd>
+        <dt>Checkpoint</dt><dd>A saved snapshot of a job's progress, so it can resume from there.</dd>
+        <dt>Replication</dt><dd>Running copies of a job or data in more than one place.</dd>
+        <dt>Disaster recovery</dt><dd>Preparing for and recovering from an event that stops a workload at its main location.</dd>
+        <dt>RTO</dt><dd>Recovery Time Objective: the maximum acceptable time between the interruption and the restoration of service.</dd>
+        <dt>RPO</dt><dd>Recovery Point Objective: the maximum acceptable data loss, measured in time.</dd>
+        <dt>DNS</dt><dd>The internet's address book. Switching DNS points customers to the recovery region.</dd>
+      </dl>
+    </section>
+
+    <!-- ===================== 8. FAQ ===================== -->
+    <section class="chapter" id="m-faq">
+      <h2 class="ch-title"><span class="ch-num">8</span>TROUBLESHOOTING AND FAQ</h2>
+      <div class="faq">
+        <h4>I can't hear anything.</h4>
+        <p>Sound is off by default. Click <b>BGM</b> (music) and/or <b>SFX</b> (effects) in the top bar so they read ON. Also check your device volume and that the browser tab isn't muted.</p>
+        <h4>The music didn't start when I opened the page.</h4>
+        <p>That's expected: sound is always off when the app opens. Click <b>BGM</b> once and the music starts right away.</p>
+        <h4>Something looks stuck.</h4>
+        <p>HA zone: press <b>REPAIR ALL</b> or <b>RESET</b>. FT zone: press <b>RESTART</b>. DR zone: pick a strategy card again. You can always press <kbd>ESC</kbd> to go back to the zone screen and come back in.</p>
+        <h4>A button doesn't respond.</h4>
+        <p>Dimmed buttons are locked on purpose. In the FT zone, proactive techniques unlock at 30% temperature and reactive ones after the crash. In the DR zone, TRIGGER DISASTER unlocks after you pick a strategy.</p>
+        <h4>My comparison tables disappeared.</h4>
+        <p>Results are kept only while the page stays open. Reloading the page clears them.</p>
+        <h4>Why do the numbers drop so fast?</h4>
+        <p>Everything is sped up so an outage fits into a few seconds of play. A real 99.9% service is down for minutes a month, not seconds.</p>
+        <h4>Are these real AWS or Netflix numbers?</h4>
+        <p>No. The models, techniques and strategies are real and come from the sources, but every number in the game is illustrative.</p>
+        <h4>Does it work without internet?</h4>
+        <p>Yes. Once the page has loaded, or if you open the project folder's <code>index.html</code>, everything (icons, fonts, music) is stored locally.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 9. CREDITS ===================== -->
+    <section class="chapter" id="m-credits">
+      <h2 class="ch-title"><span class="ch-num">9</span>SOURCES AND CREDITS</h2>
+      <h3>Sources behind the concepts</h3>
+      <ul class="refs">
+        <li>Endo, P.T., Rodrigues, M., Gonçalves, G.E., Kelner, J., Sadok, D.H., &amp; Curescu, C. (2016). High availability in clouds: systematic review and research challenges. <em>Journal of Cloud Computing</em>, 5:16.</li>
+        <li>Kumari, P., &amp; Kaur, P. (2018). A survey of fault tolerance in cloud computing. <em>Journal of King Saud University – Computer and Information Sciences</em>, 33, 1159–1176.</li>
+        <li>Khoshkholghi, M.A., Abdullah, A., Latip, R., Subramaniam, S., &amp; Othman, M. (2014). Disaster Recovery in Cloud Computing: A Survey. <em>Computer and Information Science</em>, 7(4), 39–59.</li>
+        <li>Amazon Web Services. (2021). <em>Disaster Recovery of Workloads on AWS: Recovery in the Cloud.</em></li>
+        <li>Amazon Web Services. <em>High availability (Multi-AZ) for Amazon RDS</em>; <em>Warm pools for Amazon EC2 Auto Scaling</em>.</li>
+        <li>Netflix. (2013). <em>Active-Active for Multi-Regional Resiliency</em>. Netflix Technology Blog.</li>
+        <li>Netflix. <em>Netflix/Hystrix</em> and <em>Netflix/chaosmonkey</em> GitHub repositories.</li>
+      </ul>
+      <h3>Credits</h3>
+      <ul class="refs">
+        <li>Music: "Link to the Castle" by TAD ON (royalty free, YouTube).</li>
+        <li>Fonts: Press Start 2P and VT323 (SIL Open Font License).</li>
+        <li>Icons: pixel art generated for this project.</li>
+      </ul>
+      <div class="end-card">
+        <img src="assets/icons/ui_trophy.png" alt="">
+        <p class="end-title">THANKS FOR PLAYING!</p>
+        <p>Uptime Quest and this manual were made by <b>Claude L. Calimlim</b>.</p>
+        <button class="px-btn back-to-game" type="button" data-action="close-manual"><img src="assets/icons/ui_play.png" alt="" class="icon-sm"> BACK TO THE GAME</button>
+      </div>
+    </section>
+
+    </main>
+  </section>
+
+  <!-- ============ ABOUT / CREDITS ============ -->
+  <div class="modal" id="about-modal" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+    <div class="modal-box px-box">
+      <h2 id="about-title">ABOUT</h2>
+      <p class="about-made">Made by: <strong>Claude L. Calimlim</strong></p>
+      <p>
+        Uptime Quest is an interactive companion to the report
+        <em>Cloud Reliability, Fault Tolerance and Disaster Recovery</em> (MIT 524).
+        The three zones follow the report: High Availability prevents, Fault Tolerance survives,
+        Disaster Recovery recovers.
+      </p>
+      <h3>SOURCES</h3>
+      <ul>
+        <li>Endo et al. (2016), High availability in clouds</li>
+        <li>Kumari &amp; Kaur (2018), A survey of fault tolerance in cloud computing</li>
+        <li>Khoshkholghi et al. (2014), Disaster recovery in cloud computing</li>
+        <li>AWS (2021), Disaster Recovery of Workloads on AWS</li>
+        <li>Netflix Tech Blog; Netflix/Hystrix and Netflix/chaosmonkey on GitHub</li>
+      </ul>
+      <h3>CREDITS</h3>
+      <ul>
+        <li>Music: "Link to the Castle" by TAD ON (royalty free, YouTube)</li>
+        <li>Fonts: Press Start 2P and VT323 (SIL Open Font License)</li>
+        <li>Icons: pixel art generated for this project</li>
+      </ul>
+      <div class="about-actions">
+        <a class="px-btn" href="#manual" data-action="manual"><img src="assets/icons/ui_help.png" alt="" class="icon-sm"> OPEN THE MANUAL</a>
+        <button class="px-btn ghost" data-action="close-about" type="button">CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/zone-ha.js"></script>
+  <script src="js/zone-ft.js"></script>
+  <script src="js/zone-dr.js"></script>
+  <script src="assets/manual/callouts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
